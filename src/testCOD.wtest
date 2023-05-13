@@ -1,0 +1,119 @@
+import registroAbatidos.*
+
+test "testAgregaUnElemento" {
+	cod.agregarAbatidosDia(2)
+	assert.equals(1, cod.cantidadDeDiasRegistrados())
+}
+test "testAgregaVariosElementos" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	assert.equals(3, cod.cantidadDeDiasRegistrados())
+
+}
+test "testEsListaVaciaConEmpty" {
+	cod.agregarAbatidosDia(2)
+	cod.eliminarLaCantidadDeAbatidos(2)
+	assert.that(cod.estaVacioElRegistro())
+}
+test "testEsListaVaciaConSize" {
+	cod.agregarAbatidosDia(2)
+	cod.eliminarLaCantidadDeAbatidos(2)
+	assert.that(cod.estaVacioElRegistroConSize())
+}
+test "testEsListaVaciaConListaVacia" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	cod.eliminarLasCantidadesDeAbatidos([4, 8, 12])
+	assert.that(cod.estaVacioElRegistroConVacia())
+}
+test "testNoEsListaVaciaConEmpty" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	cod.eliminarLasCantidadesDeAbatidos([4, 12])
+	assert.notThat(cod.estaVacioElRegistro())
+}
+test "testSiAlgunDiaSeAbatio" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	assert.that(cod.algunDiaSeAbatio(12))
+}
+test "testNoAlgunDiaSeAbatio" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	assert.notThat(cod.algunDiaSeAbatio(10))
+}
+test "testPrimerValorDeAbatidos" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	assert.equals(4, cod.primerValorDeAbatidos())
+}
+test "testUltimoValorDeAbatidos" {
+	cod.agregarAbatidosDias([4, 8, 12])
+	assert.equals(12, cod.ultimoValorDeAbatidos())
+}
+test "testMaximoValorDeAbatidos" {
+	cod.agregarAbatidosDias([4, 8, 12, 11])
+	assert.equals(12, cod.maximoValorDeAbatidos())
+}
+test "testTotalDeAbatidos" {
+	cod.agregarAbatidosDias([4, 8, 12, 11])
+	assert.equals(4+8+12+11, cod.totalAbatidos())
+}
+test "testCantidadDeAbatidosElDiaNro" {
+	cod.agregarAbatidosDias([4, 8, 12, 11])
+	assert.equals(12, cod.cantidadDeAbatidosElDiaNro(3))
+}
+test "testAbatidosSuperioresA" {
+	cod.agregarAbatidosDias([4, 8, 12, 11])
+	assert.equals([12,11], cod.abatidosSuperioresA(10))
+	assert.equals(2, cod.abatidosSuperioresA(10).size())
+}
+test "testValoresDeAbatidosPares" {
+	cod.agregarAbatidosDias([4, 8, 12, 11])
+	assert.equals([4, 8, 12], cod.valoresDeAbatidosPares())
+	assert.equals(3, cod.valoresDeAbatidosPares().size())
+}
+test "testValoresDeAbatidosParesListaVacia" {
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.equals([], cod.valoresDeAbatidosPares())
+}
+test "testElValorDeAbatidos" {
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.equals(7, cod.elValorDeAbatidos(7))
+}
+test "elValorDeAbatidosNoEncontradov1"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	//lanza una excepcion
+	assert.throwsException({cod.elValorDeAbatidos(5)})
+}
+test "elValorDeAbatidosNoEncontradov2"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	//lanza una excepcion con mensaje
+	assert.throwsExceptionWithMessage("Numero no encontrado", {cod.elValorDeAbatidos(5)})
+}
+test "abatidosSumando"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.equals([5, 9, 15, 13], cod.abatidosSumando(2))
+}
+test "abatidosEsAcotadaVerdadero"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.that(cod.abatidosEsAcotada(2,14))
+}
+test "abatidosEsAcotadaFalso"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.notThat(cod.abatidosEsAcotada(4,14))
+}
+test "algunDiaAbatioMasDeVerdadero"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.that(cod.algunDiaAbatioMasDe(5))
+}
+test "algunDiaAbatioMasDeFalso"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.notThat(cod.algunDiaAbatioMasDe(14))
+}
+test "todosLosDiasAbatioMasDeVerdadero"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.that(cod.todosLosDiasAbatioMasDe(2))
+}
+test "todosLosDiasAbatioMasDeFalso"{
+	cod.agregarAbatidosDias([3, 7, 13, 11])
+	assert.notThat(cod.todosLosDiasAbatioMasDe(14))
+}
+test "cantidadAbatidosMayorALaPrimera"{
+	cod.agregarAbatidosDias([10, 3, 7, 13, 11])
+	assert.equals(2,cod.cantidadAbatidosMayorALaPrimera())
+}
